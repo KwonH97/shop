@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -103,15 +104,23 @@ public class KHController {
 		return "admin/dashboard";
 	}
 	
-	@GetMapping("admin/pregForm")
+	@GetMapping("/admin/pregForm")
 	public void pregForm(){
-		
+	
 	}
 	
 	@PostMapping("/preg")
 	public String prouductreg(Product product) {
 		
 		productservice.saveProduct(product);
+		
+		return "redirect:/admin/dashboard";
+	}
+	
+	@GetMapping("/delete/{pid}")
+	public String delete(@PathVariable(name = "pid") Long pid) {
+		
+		productservice.deleteProduct(pid);
 		
 		return "redirect:/admin/dashboard";
 	}
