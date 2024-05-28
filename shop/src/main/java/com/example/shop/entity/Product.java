@@ -1,8 +1,7 @@
 package com.example.shop.entity;
 
+import java.time.LocalDateTime;
 import java.util.Set;
-
-import javax.xml.stream.events.Comment;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,8 +46,16 @@ public class Product {
     @Column(nullable = false)
     private String status;  // 'AVAILABLE' or 'SOLD_OUT'
 
+    @Column(name = "pcreated_at", nullable = false, updatable = false)
+    private LocalDateTime pcreatedAt; // 등록 시간
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Set<com.example.shop.entity.Comment> comments; // 댓글 목록
 	
+    @PrePersist
+    protected void onCreate() {
+    	pcreatedAt = LocalDateTime.now();
+    }
+    
 }

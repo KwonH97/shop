@@ -41,20 +41,20 @@ public class Comment {
     @Column(nullable = false)
     private String content; // 댓글 내용
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt; // 생성 시간
+    @Column(name = "ccreated_at", nullable = false, updatable = false)
+    private LocalDateTime ccreatedAt; // 생성 시간
 
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt; // 수정 시간
+    @Column(name = "cupdated_at", nullable = false)
+    private LocalDateTime cupdatedAt; // 수정 시간
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        ccreatedAt = LocalDateTime.now();
+        cupdatedAt = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        cupdatedAt = LocalDateTime.now();
     }
 }

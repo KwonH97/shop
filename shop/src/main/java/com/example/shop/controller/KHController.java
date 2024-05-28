@@ -1,5 +1,8 @@
 package com.example.shop.controller;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.shop.entity.Member;
+import com.example.shop.entity.Product;
 import com.example.shop.repository.ICommentRepository;
 import com.example.shop.repository.IMemberRepository;
 import com.example.shop.repository.IProductRepository;
 import com.example.shop.service.MemberService;
+import com.example.shop.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,8 +36,12 @@ public class KHController {
 	@Autowired
 	MemberService memberService;
 	
+	@Autowired
+	ProductService productservice;
+	
+	
 	@GetMapping("/index")
-	public void mainPage() {
+	public void index() {
 		
 	}
 	
@@ -46,18 +55,26 @@ public class KHController {
 		
 		String userName = request.getParameter("userName");
         String password = request.getParameter("password");
-        System.out.println(memberService.authenticate(userName, password));
-        if (memberService.authenticate(userName, password)) {
-            // 로그인 성공 시 처리
-    		session.setAttribute("userName", userName);
-    		
-            return "redirect:/mainPage";
         
-        } else {
-            // 로그인 실패 시 처리
-            return "redirect:/mainPage";
+        Optional<Member> memberOptional = memb.findByUserName(userName);
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            
+            if (memberService.authenticate(userName, password)) {
+                // 로그인 성공 시 처리
+                session.setAttribute("userName", userName);
+
+                // 사용자의 역할 확인하여 관리자이면 관리자 페이지로 이동
+                if (memberService.isAdmin(userName)) {
+                    return "redirect:/admin/dashboard"; // 관리자 페이지로 이동
+                } else {
+                    return "redirect:/mainPage"; // 일반 페이지로 이동
+                }
+            }
         }
-	}
+
+        return "redirect:/member/loginForm"; // 로그인 폼으로 리다이렉트
+    }
 	
 	@RequestMapping("/member/regForm")
 	public void regForm() {
@@ -72,4 +89,17 @@ public class KHController {
 		return "redirect:/member/loginForm";
 	}
 	
+	@GetMapping("/mainPage")
+	public void mainPage() {
+		
+	}
+	
+	@RequestMapping("/admin/dashboard")
+	public String dashboard(Model model) {
+		List<Product> products = productservice.getAllProducts();
+		
+		model.addAttribute("products", products);
+		
+		return "productList";
+	}
 }
