@@ -5,6 +5,26 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<table board ="1">
+		<thead>
+			<tr>
+				<th>상품이름</th>
+				<th>가격</th>
+				<th>상품설명</th>
+				<th>상태<th>
+				<th>재고수량</th>
+			 	<td><button onclick="window.location.href='/admin/pregForm'">상품등록</button></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${products}">
+				<td th:text="${product.pname}"></td>
+				<td th:text="${product.price}"></td>
+				<td th:text="${product.description}"></td>
+				<td th:text="${product.status}"></td>
+				<td th:text="${product.stockQuantity}"></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>

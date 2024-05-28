@@ -38,7 +38,7 @@ public class Product {
 	private String description;
 	
 	@Column(nullable = false)
-    private Double price;
+    private String price;
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;

@@ -100,6 +100,20 @@ public class KHController {
 		
 		model.addAttribute("products", products);
 		
-		return "productList";
+		return "admin/dashboard";
 	}
+	
+	@GetMapping("admin/pregForm")
+	public void pregForm(){
+		
+	}
+	
+	@PostMapping("/preg")
+	public String prouductreg(Product product) {
+		
+		productservice.saveProduct(product);
+		
+		return "redirect:/admin/dashboard";
+	}
+	
 }

@@ -18,4 +18,9 @@ public class ProductService {
 		
         return pro.findAll();
     }
+	
+	// 제품을 데이터베이스에 저장하는 메서드
+    public void saveProduct(Product product) {
+    	pro.save(product);
+    }
 }
