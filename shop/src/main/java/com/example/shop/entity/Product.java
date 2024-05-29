@@ -49,8 +49,14 @@ public class Product {
     @Column(name = "pcreated_at", nullable = false, updatable = false)
     private LocalDateTime pcreatedAt; // 등록 시간
     
-    @Column(name = "image_url") // 이미지 URL 필드 추가
-    private String imageUrl;
+    @Column(name = "fileName") // 이미지 URL 필드 추가
+    private String fileName;
+    
+    @Column(name = "filePath") // 이미지 URL 필드 추가
+    private String filePath;
+    
+    @Column(name = "fileSize") // 이미지 URL 필드 추가
+    private Long fileSize;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")

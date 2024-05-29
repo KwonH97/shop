@@ -3,33 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <title>Main Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    #wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #ai {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px; /* 간격을 추가합니다 */
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px; /* 간격을 추가합니다 */
+    }
+
+    ul li {
+        flex: 0 1 calc(33.333% - 30px); /* 3개의 아이템을 한 줄에 배치하고 간격을 뺍니다 */
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    ul li img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
 </head>
 <body>
-<h1>Main Page</h1><br>
+<h1>Shop</h1>
 <div id="wrap">
-        <header>
-            
-        </header>
-      
-        <div id="ai">
-            <ul>
-            
-                
-                <li onclick="location.href='/productDetail?pid=1'" id="ai2"></li>
-                <li onclick="location.href='/'" id="ai3"></li>
-                <li onclick="location.href='/'" id="ai4"></li>
-                <li onclick="location.href='/user/user_recruitDetail?jno=5'" id="ai5"></li>
-            </ul>
-        </div>
-        
-        <section>
-            <ul id="lastest">
-                <li id="jobad1" onclick="location.href='/'"></li>
-                <li id="jobad2" onclick="location.href='/'"></li>
-                <li id="jobad3" onclick="location.href='/'"></li>
-                <li id="jobad4" onclick="location.href='/user/user_recruitDetail?jno=5'"></li>
-            </ul>
-       	</section>
+    <header>
+        <h2>Main Page</h2>
+    </header>
+    <div id="ai">
+        <ul th:each="prodList:${prodList}">
+            <li><img th:src="@{|/images/product/${prodList.fileName}|}" alt="Product Image"/></li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>
