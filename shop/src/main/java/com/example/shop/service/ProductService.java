@@ -31,4 +31,6 @@ public class ProductService {
     public void deleteProduct(Long pid) {
     	pro.deleteById(pid); // ProductRepository의 deleteById 메서드를 사용하여 상품 삭제
     }
+    
+    
 }

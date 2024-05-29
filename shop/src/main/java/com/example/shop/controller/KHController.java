@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,6 +94,8 @@ public class KHController {
 	@GetMapping("/mainPage")
 	public void mainPage() {
 		
+		
+		
 	}
 	
 	@RequestMapping("/admin/dashboard")
@@ -123,6 +126,35 @@ public class KHController {
 		productservice.deleteProduct(pid);
 		
 		return "redirect:/admin/dashboard";
+	}
+	
+	@GetMapping("/modifyForm/{pid}")
+	public String modifyForm(@PathVariable(name = "pid") Long pid, Model model) {
+		
+		Optional<Product> productOptional = prod.findById(pid);
+		model.addAttribute("product", productOptional.get());
+		
+		return "admin/modifyForm";
+	}
+	
+	@PostMapping("/modify")
+	public String modify(@ModelAttribute Product product) {
+		
+		prod.save(product);
+		
+		return "redirect:/admin/dashboard";
+		
+	}
+	
+	@GetMapping("/productDetail/{pid}")
+	public String detail(@PathVariable(name ="pid") Long pid, Model model) {
+		
+		Optional<Product> productOptional = prod.findById(pid);
+		Product product = productOptional.get();
+		
+		model.addAttribute("product", product);
+		
+		return "member/productDetail";
 	}
 	
 }

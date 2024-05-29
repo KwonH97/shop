@@ -51,6 +51,7 @@
                 <th>상품설명</th>
                 <th>상태</th>
                 <th>재고수량</th>
+                <th>상품수정</th>
                 <th>상품삭제</th>
                 <td><button onclick="window.location.href='/admin/pregForm'">상품등록</button></td>
             </tr>
@@ -62,6 +63,8 @@
                 <td th:text="${product.description}"></td>
                 <td th:text="${product.status}"></td>
                 <td th:text="${product.stockQuantity}"></td>
+                <td><a th:href="@{'/modifyForm/' + ${product.pid}}"
+                       class="modify-link">수정</a></td>
                 <td>
                     <a th:href="@{'/delete/' + ${product.pid}}"
                        class="delete-link"
