@@ -1,6 +1,7 @@
 package com.example.shop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class ProductService {
     public void saveProduct(Product product) {
     	pro.save(product);
     }
+    
+   public Product findById(Long pid) {
+	   Optional<Product> result = pro.findById(pid);
+	   
+	   Product product = result.get();
+	   
+	   return product;
+   }
     
     // 상품 삭제 로직을 구현한 메서드
     @Transactional

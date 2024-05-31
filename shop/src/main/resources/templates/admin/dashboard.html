@@ -63,10 +63,10 @@
                 <td th:text="${product.description}"></td>
                 <td th:text="${product.status}"></td>
                 <td th:text="${product.stockQuantity}"></td>
-                <td><a th:href="@{'/modifyForm/' + ${product.pid}}"
+                <td><a th:href="@{'/admin/modifyForm/' + ${product.pid}}"
                        class="modify-link">수정</a></td>
                 <td>
-                    <a th:href="@{'/delete/' + ${product.pid}}"
+                    <a th:href="@{'/admin/delete/' + ${product.pid}}"
                        class="delete-link"
                        onclick="return confirm('정말로 이 상품을 삭제하시겠습니까?')">삭제</a>
                 </td>

@@ -28,7 +28,6 @@ import com.example.shop.service.MemberService;
 import com.example.shop.service.ProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/admin")
@@ -71,7 +70,6 @@ public class AdminCotroller {
 	@PostMapping("/preg")
 	public String prouductreg(@RequestParam("imageUrl") MultipartFile file, Product product) {
 		
-		productservice.saveProduct(product);
 		
 		try {
             // 만약 업로드할 폴더 없으면 만들기
@@ -115,28 +113,51 @@ public class AdminCotroller {
 	}
 	
 	@GetMapping("/modifyForm/{pid}")
-	public String modifyForm(@PathVariable(name = "pid") Long pid, Model model, HttpSession session) {
-		
-		String userName = (String) session.getAttribute("userName");
-	    String role = (String) session.getAttribute("role");
-		
-    	// 사용자가 관리자 권한이 있는지 확인합니다.
-	    if (userName != null && "Role_ADMIN".equals(role)) {
+	public String modifyForm(@PathVariable(name = "pid") Long pid, Model model) {
+			
 	        Optional<Product> productOptional = prod.findById(pid);
 
 	        // 제품이 반드시 존재한다는 가정 하에
 	        model.addAttribute("product", productOptional.get());
 	        return "admin/modifyForm";
-	    } else {
-	        // 사용자가 관리자 권한이 없는 경우 에러 페이지로 이동합니다.
-	        return "error";
-	    }
+	   
 	}
 	
 	@PostMapping("/modify")
-	public String modify(@ModelAttribute Product product) {
+	public String modify(@RequestParam("imageUrl") MultipartFile file, @ModelAttribute Product product) {
+		Product p = productservice.findById(product.getPid());
+		product.setFileName(p.getFileName());
+		product.setFilePath(p.getFilePath());
+		product.setFileSize(p.getFileSize());
+		productservice.saveProduct(product);
 		
-		prod.save(product);
+		try {
+            // 만약 업로드할 폴더 없으면 만들기
+            if (!Files.exists(rootLocation)) {
+                Files.createDirectories(rootLocation);
+            }
+
+            if (file != null && !file.isEmpty()) {
+                // 파일업로드
+                String originalFilename = file.getOriginalFilename();
+                String extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
+                String filename = UUID.randomUUID().toString() + extension;
+                Path destinationFile = this.rootLocation.resolve(Paths.get(filename)).normalize().toAbsolutePath();
+
+                // 파일이 이미 존재하면 덮어쓰기 또는 다른 처리를 해야 할 수 있음
+                Files.copy(file.getInputStream(), destinationFile);
+
+                String filePath = destinationFile.toString();
+
+                product.setFileName(filename);
+                product.setFilePath(filePath);
+                product.setFileSize(file.getSize());
+
+        		productservice.saveProduct(product);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Could not create upload directory or save file!", e);
+        }
 		
 		return "redirect:/admin/dashboard";
 		
