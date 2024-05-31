@@ -70,7 +70,6 @@ public class AdminCotroller {
 	@PostMapping("/preg")
 	public String prouductreg(@RequestParam("imageUrl") MultipartFile file, Product product) {
 		
-		
 		try {
             // 만약 업로드할 폴더 없으면 만들기
             if (!Files.exists(rootLocation)) {
@@ -89,12 +88,12 @@ public class AdminCotroller {
 
                 String filePath = destinationFile.toString();
 
-                // User 엔티티에 파일 정보 설정
+                
                 product.setFileName(filename);
                 product.setFilePath(filePath);
                 product.setFileSize(file.getSize());
 
-                // User 엔티티 저장
+                
         		productservice.saveProduct(product);
             }
         } catch (IOException e) {
@@ -162,10 +161,5 @@ public class AdminCotroller {
 		return "redirect:/admin/dashboard";
 		
 	}
-	
-	
-	
-	
-	
 	
 }

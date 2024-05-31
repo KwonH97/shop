@@ -33,33 +33,36 @@
     #ai {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
         gap: 15px; /* 간격을 추가합니다 */
+        width: 1200px;
+        margin: 0 auto;
     }
 
     ul {
         list-style: none;
         padding: 0;
-        margin: 0;
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        width:400px;
         gap: 15px; /* 간격을 추가합니다 */
+        box-sizing: border-box;
     }
 
     ul li {
-        flex: 0 1 calc(33.333% - 30px); /* 3개의 아이템을 한 줄에 배치하고 간격을 뺍니다 */
+     	width:100%;
         margin-bottom: 15px;
         border: 1px solid #ddd;
         border-radius: 8px;
         overflow: hidden;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        
     }
 
     ul li img {
         width: 100%;
-        height: auto;
+        height: auto; /* 이미지 높이를 200px로 고정합니다 */
+        
         display: block;
         border-bottom: 1px solid #ddd;
     }
@@ -73,7 +76,11 @@
     </header>
     <div id="ai">
         <ul th:each="prodList:${prodList}">
-            <li><img th:src="@{|/images/product/${prodList.fileName}|}" alt="Product Image"/></li>
+            <li>
+            	<a th:href="@{|/productDetail/${prodList.pid}|}">
+            	<img th:src="@{|/images/product/${prodList.fileName}|}" alt="Product Image"/>
+            	</a>
+           	</li>
         </ul>
     </div>
 </div>

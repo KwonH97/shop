@@ -1,11 +1,13 @@
 package com.example.shop.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.shop.entity.Product;
 import com.example.shop.repository.IProductRepository;
@@ -51,6 +53,16 @@ public class KHController {
 	
 	}
 	
+	@GetMapping("/productDetail/{pid}")
+	public String detail(@PathVariable(name ="pid") Long pid, Model model) {
+		
+		Optional<Product> productOptional = prod.findById(pid);
+		Product product = productOptional.get();
+		
+		model.addAttribute("product", product);
+		
+		return "/detail";
+	}
 	
 //	@GetMapping("/member/loginForm")
 //	public void loginForm() {

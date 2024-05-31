@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>장바구니</title>
+<style>
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.cart-items {
+    margin-top: 20px;
+}
+
+.cart-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.product-image {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.product-price {
+    font-weight: bold;
+    color: green;
+}
+
+.quantity-input {
+    width: 50px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="cart-items">
+    	<form action="" method="post">
+	        <div class="cart-item" th:each="cartItem : ${cartItem}">
+	            <div class="product-info">
+	                <img class="product-image" th:src="@{|/images/product/${cartItem.product.fileName}|}">
+	                <div class="product-name" th:text="${cartItem.product.pname}"></div>
+	                <div class="product-price" th:text="${cartItem.product.price} + '원'"></div>
+	            </div>
+	            <input class="quantity-input" type="number" th:value="${cartItem.quantity}" min="1">
+	        </div>
+            <input type="submit" value="구매하기">
+        </form>
+    </div>
+</div>
+</body>
+</html>

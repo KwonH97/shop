@@ -71,15 +71,6 @@ public class MemberController {
 		return "redirect:/member/loginForm";
 	}
 	
-	@GetMapping("/productDetail/{pid}")
-	public String detail(@PathVariable(name ="pid") Long pid, Model model) {
-		
-		Optional<Product> productOptional = prod.findById(pid);
-		Product product = productOptional.get();
-		
-		model.addAttribute("product", product);
-		
-		return "member/productDetail";
-	}
+	
 	
 }
