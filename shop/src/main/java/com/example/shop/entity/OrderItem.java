@@ -30,7 +30,7 @@ public class OrderItem {
     private Long oid;
 
     @ManyToOne
-    @JoinColumn(name = "user_Name", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private Member member;
 
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

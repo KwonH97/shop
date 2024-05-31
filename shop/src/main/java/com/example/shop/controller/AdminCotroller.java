@@ -54,22 +54,16 @@ public class AdminCotroller {
 	
 	private final Path rootLocation = Paths.get("/upload");
 	
-	@RequestMapping("/admin/dashboard")
-	public String dashboard(HttpServletRequest request, Model model, HttpSession session) {
+	@RequestMapping("/dashboard")
+	public String dashboard(HttpServletRequest request, Model model) {
 		
-		String userName = (String) session.getAttribute("userName");
-	    String role = (String) session.getAttribute("role");
-
-	    if (userName != null && "ADMIN".equals(role)) {
 	        List<Product> products = productservice.getAllProducts();
 	        model.addAttribute("products", products);
 	        return "admin/dashboard";
-	    }
-
-	    return "error"; // 권한이 없을 경우 에러 페이지로 이동
 	}
+	        
 	
-	@GetMapping("/admin/pregForm")
+	@GetMapping("/pregForm")
 	public void pregForm(){
 	
 	}

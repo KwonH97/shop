@@ -58,9 +58,6 @@ public class Product {
     @Column(name = "fileSize") // 이미지 URL 필드 추가
     private Long fileSize;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Set<com.example.shop.entity.Comment> comments; // 댓글 목록
 	
     @PrePersist
     protected void onCreate() {

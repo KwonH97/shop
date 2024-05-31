@@ -31,11 +31,11 @@ public class Comment {
     private Long cid; // 기본키
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "pid", nullable = false)
     private Product product; // 상품과의 관계
 
     @ManyToOne
-    @JoinColumn(name = "user_name", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private Member member; // 사용자와의 관계
 
     @Column(nullable = false)

@@ -1,16 +1,16 @@
 package com.example.shop.controller;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.shop.Dto.MemberDto;
 import com.example.shop.entity.Member;
 import com.example.shop.entity.Product;
 import com.example.shop.repository.ICartItemRepository;
@@ -45,6 +45,8 @@ public class MemberController {
 	@Autowired
 	ProductService productservice;
 	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping("/regForm")
 	public void regForm() {
@@ -52,8 +54,18 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/regMember")
-	public String regMember(Member member) {
+	public String regMember(MemberDto memberDto) {
 		
+		Member member = new Member();
+		member.setUsername(memberDto.getUsername());
+		
+		String newpw = bCryptPasswordEncoder.encode(memberDto.getPassword());
+		
+		member.setPassword(newpw);
+		member.setName(memberDto.getName());
+		member.setRole("ROLE_MEMBER");
+		member.setTel(memberDto.getTel());
+		System.out.println(member);
 		memb.save(member);
 		
 		return "redirect:/member/loginForm";

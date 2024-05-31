@@ -10,8 +10,9 @@ import com.example.shop.entity.Member;
 
 public interface IMemberRepository extends JpaRepository<Member, String> {
 
-	@Query(value="select * from member where user_name= :userName", nativeQuery=true)
-    Optional<Member> findByUserName(@Param("userName") String userName);
-	
-	
+//	@Query(value="select * from member where user_name= :userName", nativeQuery=true)
+//    Optional<Member> findByUserName(@Param("userName") String userName);
+
+	public Member findByUsername(String username);
+
 }

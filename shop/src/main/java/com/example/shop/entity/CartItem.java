@@ -25,11 +25,11 @@ public class CartItem {
     private Long iid;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "pid", nullable = false)
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "userName_id", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private Member member;
 
     private int quantity;

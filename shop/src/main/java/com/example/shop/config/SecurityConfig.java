@@ -21,10 +21,10 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests((auth) -> auth
-				.requestMatchers("/","/member/loginForm", "/member/regForm","/mainPage").permitAll()
-				.requestMatchers("/productDetail/**").permitAll()
+				.requestMatchers("/","/loginForm", "/member/regForm","/mainPage","/member/regMember").permitAll()
 				.requestMatchers("/member/**").hasAnyRole("ADMIN", "MEMBER")
 				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.requestMatchers("/productDetail/**").permitAll()
 				.anyRequest().authenticated()
 				
 				);
@@ -37,7 +37,6 @@ public class SecurityConfig {
 				);
 		
 		http.csrf(AbstractHttpConfigurer::disable); // csrf 기능끄기
-		
 		
 		return http.build();
 	}
